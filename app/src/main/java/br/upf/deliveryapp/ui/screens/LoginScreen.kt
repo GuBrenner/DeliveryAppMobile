@@ -92,7 +92,9 @@ fun LoginScreen(  navController: NavController ,viewModel: UserViewModel = viewM
                 //logica para validação de login
                 when (loginResult) {
                     is LoginResult.Success -> {
-                        //navegar para a proxima tela
+                        navController.navigate("HomeScreen") {
+                            popUpTo("LoginScreen") { inclusive = true }
+                        }
                     }
 
                     is LoginResult.Error -> {
@@ -129,7 +131,11 @@ fun LoginScreen(  navController: NavController ,viewModel: UserViewModel = viewM
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.Center
         ) {
-            TextButton(onClick = { }) {
+            TextButton(onClick = {
+                navController.navigate("CadastroScreen") {
+                    popUpTo("LoginScreen") { inclusive = true }
+                }
+            }) {
                 Text("Criar uma conta")
             }
         }
@@ -139,7 +145,7 @@ fun LoginScreen(  navController: NavController ,viewModel: UserViewModel = viewM
 
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 fun LoginScreenPreview() {
     LoginScreen(navController = rememberNavController())
