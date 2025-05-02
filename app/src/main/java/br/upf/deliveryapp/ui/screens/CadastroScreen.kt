@@ -19,6 +19,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -30,18 +31,20 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import br.upf.deliveryapp.data.user.User
 
 
 @Composable
-fun CadastroScreen(navController: NavController) {
-    var email by remember { mutableStateOf(TextFieldValue("")) }
-    var senha by remember { mutableStateOf(TextFieldValue("")) }
-    var nome by remember { mutableStateOf(TextFieldValue("")) }
-    var telefone by remember { mutableStateOf(TextFieldValue("")) }
+fun CadastroScreen(navController: NavController, onSave: (User) -> Unit = {}, user: User? = null ) {
+    var email by remember  { mutableStateOf(user?.email ?: "") }
+    var senha by remember  { mutableStateOf(user?.password ?: "") }
+    var nome by remember  { mutableStateOf(user?.name ?: "") }
+    var telefone by remember  { mutableStateOf(user?.phone ?: "") }
 
     val colorRoxo = Color(rgb(103, 80, 164))
 
@@ -64,7 +67,6 @@ fun CadastroScreen(navController: NavController) {
             label = { Text("Nome") },
             leadingIcon = { Icon(Icons.Default.Person, contentDescription = "Ícone de nome") },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
-            visualTransformation = PasswordVisualTransformation(),
             modifier = Modifier.fillMaxWidth()
         )
 
@@ -76,7 +78,6 @@ fun CadastroScreen(navController: NavController) {
             label = { Text("Telefone") },
             leadingIcon = { Icon(Icons.Default.Call, contentDescription = "Ícone de telefone") },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
-            visualTransformation = PasswordVisualTransformation(),
             modifier = Modifier.fillMaxWidth()
         )
 
@@ -108,16 +109,34 @@ fun CadastroScreen(navController: NavController) {
         Spacer(modifier = Modifier.height(16.dp))
 
 
+        OutlinedButton(
+            onClick = {
+                val newUser = User(
+                    id = user?.id ?: 0,
+                    email = email,
+                    name = nome,
+                    phone = telefone,
+                    password = senha,
+                    userType = 0
+                )
+                email = ""
+                nome = ""
+                telefone = ""
+                senha = ""
+                onSave(newUser)
 
-
-
+            }
+        ) {
+            Text("Cadastrar-se")
+        }
     }
+
 
 }
 
 @Preview(showBackground = true)
 @Composable
 fun CadastroScreenPreview() {
-    CadastroScreen(navController = rememberNavController())
+    CadastroScreen(navController = rememberNavController(), onSave = {})
 }
 

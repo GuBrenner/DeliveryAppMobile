@@ -1,6 +1,6 @@
 package br.upf.deliveryapp.ui.screens
 
-import UserViewModelFactory
+
 import android.graphics.Color.rgb
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -43,8 +43,8 @@ import br.upf.deliveryapp.viewmodel.UserViewModel
 
 
 @Composable
-fun LoginScreen(  navController: NavController ,viewModel: UserViewModel = viewModel(factory = UserViewModelFactory(LocalContext.current))) {
-    val loginResult by viewModel.loginResult.collectAsState()
+fun LoginScreen(  navController: NavController ) {
+
     var email by remember { mutableStateOf(TextFieldValue("")) }
     var senha by remember { mutableStateOf(TextFieldValue("")) }
 
@@ -90,21 +90,7 @@ fun LoginScreen(  navController: NavController ,viewModel: UserViewModel = viewM
         Button(
             onClick = {
                 //logica para validação de login
-                when (loginResult) {
-                    is LoginResult.Success -> {
-                        navController.navigate("HomeScreen") {
-                            popUpTo("LoginScreen") { inclusive = true }
-                        }
-                    }
 
-                    is LoginResult.Error -> {
-                        //mostrar mensagem de erro
-                    }
-
-                    is LoginResult.Initial -> {
-                        //estado inicial
-                    }
-                }
             },
             modifier = Modifier.fillMaxWidth()
         ) {
