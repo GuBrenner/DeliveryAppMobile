@@ -43,91 +43,79 @@ import br.upf.deliveryapp.viewmodel.UserViewModel
 
 
 @Composable
-fun LoginScreen(  navController: NavController ) {
-
-    var email by remember { mutableStateOf(TextFieldValue("")) }
-    var senha by remember { mutableStateOf(TextFieldValue("")) }
-
-    val colorRoxo = Color(rgb(103, 80, 164))
-
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
-        Text(text = "Login", style = MaterialTheme.typography.headlineMedium, color = colorRoxo)
-
-        Spacer(modifier = Modifier.height(32.dp))
+fun LoginPage(modifier: Modifier = Modifier,navController: NavController,authViewModel: AuthViewModel) {
 
 
-        OutlinedTextField(
-            value = email,
-            onValueChange = { email = it },
-            label = { Text("E-mail") },
-            leadingIcon = { Icon(Icons.Default.Email, contentDescription = "Ícone de e-mail") },
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
-            modifier = Modifier.fillMaxWidth()
-        )
+    var email by remember {
+        mutableStateOf("")
+    }
 
-        Spacer(modifier = Modifier.height(16.dp))
+    var password by remember {
+        mutableStateOf("")
+    }
 
+    val authState = authViewModel.authState.observeAsState()
+    val context = LocalContext.current
 
-        OutlinedTextField(
-            value = senha,
-            onValueChange = { senha = it },
-            label = { Text("Senha") },
-            leadingIcon = { Icon(Icons.Default.Lock, contentDescription = "Ícone de senha") },
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-            visualTransformation = PasswordVisualTransformation(),
-            modifier = Modifier.fillMaxWidth()
-        )
-
-        Spacer(modifier = Modifier.height(24.dp))
-
-
-        Button(
-            onClick = {
-                //logica para validação de login
-
-            },
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Text("Entrar")
-        }
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.Center
-        ) {
-            TextButton(onClick = {
-                navController.navigate("CadastroScreen") {
-                    popUpTo("LoginScreen") { inclusive = true }
-                }
-
-            }) {
-                Text("Esqueci minha senha")
-            }
-        }
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.Center
-        ) {
-            TextButton(onClick = {
-                navController.navigate("CadastroScreen") {
-                    popUpTo("LoginScreen") { inclusive = true }
-                }
-            }) {
-                Text("Criar uma conta")
-            }
+    LaunchedEffect(authState.value) {
+        when(authState.value){
+            is AuthState.Authenticated -> navController.navigate("home")
+            is AuthState.Error -> Toast.makeText(context,
+                (authState.value as AuthState.Error).message, Toast.LENGTH_SHORT).show()
+            else -> Unit
         }
     }
 
+    Column(
+        modifier = modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(text = "Login Page", fontSize = 32.sp)
 
+        Spacer(modifier = Modifier.height(16.dp))
+
+        OutlinedTextField(
+            value = email,
+            onValueChange = {
+                email = it
+            },
+            label = {
+                Text(text = "Email")
+            }
+        )
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        OutlinedTextField(
+            value = password,
+            onValueChange = {
+                password = it
+            },
+            label = {
+                Text(text = "Password")
+            }
+        )
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Button(onClick = {
+            authViewModel.login(email,password)
+        },
+            enabled = authState.value != AuthState.Loading
+        ) {
+            Text(text = "Login")
+        }
+
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        TextButton(onClick = {
+            navController.navigate("signup")
+        }) {
+            Text(text = "Don't have an account, Signup")
+        }
+
+    }
 
 }
 
