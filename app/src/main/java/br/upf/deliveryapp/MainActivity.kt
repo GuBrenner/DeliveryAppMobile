@@ -12,18 +12,20 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import br.upf.deliveryapp.ui.theme.DeliveryAppTheme
+import br.upf.deliveryapp.viewmodel.AuthViewModel
+
+import androidx.activity.viewModels
+import br.upf.deliveryapp.core.MyAppNavigation
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        val authViewModel : AuthViewModel by viewModels()
         setContent {
             DeliveryAppTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
+                    MyAppNavigation(modifier =  Modifier.padding(innerPadding),authViewModel = authViewModel)
                 }
             }
         }
