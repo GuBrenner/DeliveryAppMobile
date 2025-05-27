@@ -25,7 +25,19 @@ class SignupActivity : AppCompatActivity() {
         firebaseDatabase = FirebaseDatabase.getInstance()
         databaseReference = firebaseDatabase.reference.child("users")
 
-        binding.
+        binding.signupButton.setOnClickListener{
+            val signupUsername = binding.signupName.text.toString()
+            val signupEmail = binding.signupEmail.text.toString()
+            val signupPhone = binding.signupPhone.text.toString()
+            val signupPassword = binding.signupPassword.text.toString()
+
+            if(signupUsername.isNotEmpty() && signupEmail.isNotEmpty() && signupPhone.isNotEmpty() && signupPassword.isNotEmpty()){
+                signupUser(signupUsername, signupEmail, signupPhone, signupPassword)
+            } else {
+                Toast.makeText(this@SignupActivity, "Please fill all fields", Toast.LENGTH_LONG).show()
+            }
+
+        }
 
         }
 
@@ -36,12 +48,12 @@ class SignupActivity : AppCompatActivity() {
                 if(!dataSnapshot.exists()) {
                     val id = databaseReference.push().key
                     val userData = UserData(id, name, email, phone, password)
-                    databaseReference.child(id!!).setValue(userData);
+                    databaseReference.child(id!!).setValue(userData)
                     Toast.makeText(this@SignupActivity, "Signup Successfully", Toast.LENGTH_LONG).show()
                     startActivity(Intent(this@SignupActivity, LoginActivity::class.java))
                     finish()
                     } else {
-                    Toast.makeText(this@SignupActivity, "User already exists", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this@SignupActivity, "Todos os campos necessários", Toast.LENGTH_LONG).show()
 
                 }
                 }
