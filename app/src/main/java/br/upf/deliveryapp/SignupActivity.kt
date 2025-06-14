@@ -25,11 +25,16 @@ class SignupActivity : AppCompatActivity() {
         firebaseDatabase = FirebaseDatabase.getInstance()
         databaseReference = firebaseDatabase.reference.child("users")
 
+
         binding.signupButton.setOnClickListener{
             val signupUsername = binding.signupName.text.toString()
             val signupEmail = binding.signupEmail.text.toString()
             val signupPhone = binding.signupPhone.text.toString()
             val signupPassword = binding.signupPassword.text.toString()
+
+
+
+
 
             if(signupUsername.isNotEmpty() && signupEmail.isNotEmpty() && signupPhone.isNotEmpty() && signupPassword.isNotEmpty()){
                 signupUser(signupUsername, signupEmail, signupPhone, signupPassword)

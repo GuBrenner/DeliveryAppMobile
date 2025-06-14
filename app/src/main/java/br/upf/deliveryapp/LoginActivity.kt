@@ -53,9 +53,16 @@ class LoginActivity : AppCompatActivity() {
                     for (userSnapshot in dataSnapshot.children){
                         val userData = userSnapshot.getValue(UserData::class.java)
                         if (userData != null && userData.password == password){
-                            Toast.makeText(this@LoginActivity, "Login Successfully", Toast.LENGTH_SHORT).show()
-                            startActivity(Intent(this@LoginActivity, MainActivity::class.java))
-                            finish()
+                            if(userData.email.toString() == "admin@admin"){
+                                Toast.makeText(this@LoginActivity, "Admin Login Successfully", Toast.LENGTH_SHORT).show()
+                                startActivity(Intent(this@LoginActivity, AdminActivity::class.java))
+                                finish()
+                            }else{
+                                Toast.makeText(this@LoginActivity, "Login Successfully", Toast.LENGTH_SHORT).show()
+                                startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+                                finish()
+                            }
+
                         }else{
                             Toast.makeText(this@LoginActivity, "Invalid Credentials", Toast.LENGTH_SHORT).show()
 

@@ -32,6 +32,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/signupPhone" />
 
+
     <EditText
         android:id="@+id/signupPassword"
         android:layout_width="0dp"
