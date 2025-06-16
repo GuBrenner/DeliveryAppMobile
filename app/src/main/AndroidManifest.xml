@@ -23,8 +23,10 @@
         <activity android:name=".SignupActivity"
             android:exported="true" />
         <activity android:name=".MainActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity android:name=".AdminActivity"
+            android:exported="true"/>
+        <activity android:name=".CardapioActivity"
             android:exported="true"/>
     </application>
 </manifest>
