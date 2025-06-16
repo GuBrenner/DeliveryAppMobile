@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import br.upf.deliveryapp.adapter.CardapioDataAdapter
 import br.upf.deliveryapp.data.cardapio.CardapioData
 import br.upf.deliveryapp.databinding.ActivityCardapioBinding
 import com.google.firebase.Firebase
@@ -45,7 +46,8 @@ class CardapioActivity : AppCompatActivity() {
                     if (cardapio != null) {
                         cardapioList.add(cardapio)
                     }
-                    Log.i("CardapioActivity", "onDataChange: ${cardapioList.size}")
+                    val adapter = CardapioDataAdapter(this@CardapioActivity, cardapioList)
+                    binding.recyclerView.adapter = adapter
                 }
             }
 
