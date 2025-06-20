@@ -10,25 +10,34 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Base.Theme.AppCompat.Light.DarkActionBar"
+        android:theme="@style/Theme.DeliveryApp"
         tools:targetApi="31">
         <activity
-            android:name=".LoginActivity"
+            android:name=".Activity.Cart.CartActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.DetailEachFood.DetailEachFoodActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.ItemsList.ItemsListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.BaseActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.Splash.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SignupActivity"
-            android:exported="true" />
-        <activity android:name=".MainActivity"
-            android:exported="true" />
-        <activity android:name=".AdminActivity"
-            android:exported="true"/>
-        <activity android:name=".CardapioActivity"
-            android:exported="true"/>
+        <activity
+            android:name=".Activity.Dashboard.MainActivity"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.DeliveryApp" />
     </application>
+
 </manifest>
-
-
