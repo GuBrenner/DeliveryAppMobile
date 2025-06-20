@@ -16,7 +16,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Modifier
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import br.upf.deliveryapp.Activity.BaseActivity
+import br.upf.deliveryapp.Activity.Users.LoginScreen
+import br.upf.deliveryapp.Activity.Users.SignupScreen
 import br.upf.deliveryapp.Domain.BannerModel
 import br.upf.deliveryapp.Domain.CategoryModel
 import br.upf.deliveryapp.ViewModel.MainViewModel
@@ -26,7 +31,20 @@ class MainActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            MainScreen()
+            val navController = rememberNavController()
+
+            NavHost(navController = navController, startDestination = "login"){
+                composable("main"){
+                    MainScreen()
+                }
+                composable("login"){
+                    LoginScreen(navController)
+                }
+                composable("signup"){
+                    SignupScreen(navController)
+                }
+
+            }
         }
     }
 }
